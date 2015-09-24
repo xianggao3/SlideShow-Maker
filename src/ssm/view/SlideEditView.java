@@ -28,6 +28,7 @@ import ssm.model.SlideShowModel;
 public class SlideEditView extends HBox {
     // SLIDE THIS COMPONENT EDITS
     Slide slide;
+    
     // DISPLAYS THE IMAGE FOR THIS SLIDE
     ImageView imageSelectionView;
     
@@ -52,12 +53,11 @@ public class SlideEditView extends HBox {
 	// KEEP THE SLIDE FOR LATER
 	slide = initSlide;
         
-	
-	// MAKE SURE WE ARE DISPLAYING THE PROPER IMAGE
+		// MAKE SURE WE ARE DISPLAYING THE PROPER IMAGE
 	imageSelectionView = new ImageView();
 	updateSlideImage();
 
-	// SETUP THE CAPTION CONTROLS
+    	// SETUP THE CAPTION CONTROLS
 	captionVBox = new VBox();
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
 	captionLabel = new Label(props.getProperty(LanguagePropertyType.LABEL_CAPTION));
@@ -82,6 +82,7 @@ public class SlideEditView extends HBox {
         
         this.setOnMouseClicked(e-> {    //THIS SETS CLICKED ON SLIDE TO SELECTEDSLIDE
             ssm.slideShow.setSelectedSlide(initSlide);
+            
             });
         
     }

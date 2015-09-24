@@ -29,3 +29,11 @@
     -fx-padding-left: 10px;
     -fx-padding-right: 20px;
 }
+
+.slide_edit_view2 {
+    -fx-background-radius: 10.0;
+    -fx-background-color: rgb(200, 240, 90);
+    -fx-border-color: rgb(5, 70, 5);
+    -fx-border-thickness: 20px;
+    -fx-spacing: 60px;
+}

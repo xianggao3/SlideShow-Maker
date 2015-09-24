@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,6 +32,8 @@ import static ssm.LanguagePropertyType.TOOLTIP_REMOVE_SLIDE;
 import static ssm.LanguagePropertyType.TOOLTIP_SAVE_SLIDE_SHOW;
 import static ssm.LanguagePropertyType.TOOLTIP_VIEW_SLIDE_SHOW;
 import static ssm.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
+import static ssm.StartupConstants.CSS_CLASS_SLIDE_EDIT_VIEW;
+import static ssm.StartupConstants.CSS_CLASS_SLIDE_EDIT_VIEW_SELECTED;
 import static ssm.StartupConstants.CSS_CLASS_SLIDE_SHOW_EDIT_VBOX;
 import static ssm.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static ssm.StartupConstants.ICON_ADD_SLIDE;
@@ -80,6 +83,7 @@ public class SlideShowMakerView {
     Button saveSlideShowButton;
     Button viewSlideShowButton;
     Button exitButton;
+    TextField titleField;
     
     // WORKSPACE
     HBox workspace;
@@ -223,6 +227,12 @@ public class SlideShowMakerView {
 	// NOW PUT THESE TWO IN THE WORKSPACE
 	workspace.getChildren().add(slideEditToolbar);
 	workspace.getChildren().add(slidesEditorScrollPane);
+        
+        slidesEditorPane.setOnMouseClicked(e-> {
+            reloadSlideShowPane(slideShow);
+        });
+        
+        //titleField.setOn
     }
 
     private void initEventHandlers() {
@@ -291,8 +301,8 @@ public class SlideShowMakerView {
 	primaryStage.setY(bounds.getMinY());
 	primaryStage.setWidth(bounds.getWidth());
 	primaryStage.setHeight(bounds.getHeight());
-        primaryStage.getIcons().add(new Image("https://cdn.vectorstock.com/i/composite/19,01/flower-single-icon-vector-731901.jpg"));
-
+        primaryStage.getIcons().add(new Image("http://www.softwarecrew.com/wp-content/uploads/2013/07/icon200-1752.png"));
+        
 
         // SETUP THE UI, NOTE WE'LL ADD THE WORKSPACE LATER
 	ssmPane = new BorderPane();
@@ -360,6 +370,12 @@ public class SlideShowMakerView {
 	    SlideEditView slideEditor = new SlideEditView(slide,this);
 	    slidesEditorPane.getChildren().add(slideEditor);
             //highlight borders here
+            if(slide==slideShowToLoad.getSelectedSlide()){
+                slideEditor.getStyleClass().clear();
+                slideEditor.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW_SELECTED);
+                
+            }
+            
 	};
                
     }
