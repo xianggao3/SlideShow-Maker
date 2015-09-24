@@ -83,7 +83,7 @@ public class SlideShowMakerView {
     Button saveSlideShowButton;
     Button viewSlideShowButton;
     Button exitButton;
-    TextField titleField;
+    TextField titleField= new TextField();
     
     // WORKSPACE
     HBox workspace;
@@ -232,7 +232,10 @@ public class SlideShowMakerView {
             reloadSlideShowPane(slideShow);
         });
         
-        //titleField.setOn
+        titleField.textProperty().addListener((observable,oldValue,newValue)->{
+          slideShow.setTitle(newValue);
+            
+        });
     }
 
     private void initEventHandlers() {
@@ -283,9 +286,13 @@ public class SlideShowMakerView {
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
 	newSlideShowButton = initChildButton(fileToolbarPane, ICON_NEW_SLIDE_SHOW,	TOOLTIP_NEW_SLIDE_SHOW,	    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
 	loadSlideShowButton = initChildButton(fileToolbarPane, ICON_LOAD_SLIDE_SHOW,	TOOLTIP_LOAD_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-	saveSlideShowButton = initChildButton(fileToolbarPane, ICON_SAVE_SLIDE_SHOW,	TOOLTIP_SAVE_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+	saveSlideShowButton = initChildButton(fileToolbarPane, ICON_SAVE_SLIDE_SHOW,	TOOLTIP_SAVE_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
 	viewSlideShowButton = initChildButton(fileToolbarPane, ICON_VIEW_SLIDE_SHOW,	TOOLTIP_VIEW_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
 	exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+       
+        fileToolbarPane.getChildren().add(titleField);
+        titleField.setText("Click to add title");
+   
     }
 
     private void initWindow(String windowTitle) {
@@ -369,6 +376,8 @@ public class SlideShowMakerView {
 	for (Slide slide : slideShowToLoad.getSlides()) {
 	    SlideEditView slideEditor = new SlideEditView(slide,this);
 	    slidesEditorPane.getChildren().add(slideEditor);
+            slideEditor.captionTextField.setText(slide.getCaption());
+            titleField.setText(slideShowToLoad.getTitle());
             //highlight borders here
             if(slide==slideShowToLoad.getSelectedSlide()){
                 slideEditor.getStyleClass().clear();

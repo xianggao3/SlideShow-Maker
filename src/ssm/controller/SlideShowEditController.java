@@ -20,7 +20,7 @@ public class SlideShowEditController {
     /**
      * This constructor keeps the UI for later.
      */
-    public SlideShowEditController(SlideShowMakerView initUI) {
+    public SlideShowEditController( SlideShowMakerView initUI) {
 	ui = initUI;
     }
     
