@@ -28,6 +28,7 @@ public class Slide {
 
     public void setCaption(String caption) {
         this.caption = caption;
+       
     }
     
     // ACCESSOR METHODS

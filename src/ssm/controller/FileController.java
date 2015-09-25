@@ -6,14 +6,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
@@ -186,11 +191,15 @@ public class FileController {
         try{
             PropertiesManager props =  PropertiesManager.getPropertiesManager();
             Stage viewSS = new Stage();
-            VBox vView = new VBox();
-            HBox hView = new HBox();
+            BorderPane borderscene = new BorderPane();
             
-            Text captionText= new Text(ui.getSlideShow().getSlides().get(start).getCaption());
             
+            Text captionText= new Text("Comments: "+ui.getSlideShow().getSlides().get(start).getCaption());
+            Text titleText= new Text(ui.getSlideShow().getTitle());
+            titleText.setUnderline(true);
+            titleText.setFont(Font.font ("Verdana", 30));
+            borderscene.setBottom(captionText);
+            HBox top = new HBox(titleText);
             Button prevButton = new Button();
             Button nexButton = new Button();
             
@@ -200,16 +209,20 @@ public class FileController {
             Image prevButtonImg = new Image(prevImg);
             Image nexButtonImg = new Image(nexImg);
             
-            vView.getChildren().add(new ImageView(ImgFromPath()));
+            FlowPane imagPane = new FlowPane(new ImageView(ImgFromPath()));
+            borderscene.setCenter(imagPane);
+            borderscene.setTop(top);
+            top.setAlignment(Pos.CENTER);
             
             prevButton.setGraphic(new ImageView(prevButtonImg));
             prevButton.setDisable(false);
             prevButton.setOnAction(e-> {
                 if( start != 0){
                     start--;
-                    vView.getChildren().clear();
-                    vView.getChildren().add(new ImageView(ImgFromPath()));
-                    vView.getChildren().add(captionText);
+                    captionText.setText("Comments: "+ui.getSlideShow().getSlides().get(start).getCaption());
+                    imagPane.getChildren().clear();
+                    imagPane.getChildren().add(new ImageView(ImgFromPath()));
+                    borderscene.setBottom(captionText);
                 }
             });
             
@@ -218,17 +231,23 @@ public class FileController {
             nexButton.setOnAction(e-> {
                if(start!= ui.getSlideShow().getSlides().size()){
                    start++;
-                   vView.getChildren().clear();
-                   vView.getChildren().add(new ImageView(ImgFromPath()));
-                   vView.getChildren().add(captionText);
+                   
+                    captionText.setText("Comments: "+ui.getSlideShow().getSlides().get(start).getCaption());
+                   imagPane.getChildren().clear();
+                   imagPane.getChildren().add(new ImageView(ImgFromPath()));
+                   borderscene.setBottom(captionText);
                } 
             });
+            captionText.setFont(Font.font ("Verdana", 20));
+            VBox left = new VBox(prevButton);
+            VBox right = new VBox(nexButton);
+            borderscene.setLeft(left);
+            borderscene.setRight(right);
+            left.setAlignment(Pos.CENTER);
+            right.setAlignment(Pos.CENTER);
             
-            hView.getChildren().add(prevButton);
-            hView.getChildren().add(vView);
-            hView.getChildren().add(nexButton);
             
-            Scene hScene = new Scene(hView);
+            Scene hScene = new Scene(borderscene);
             viewSS.setScene(hScene);
             viewSS.show();
             

@@ -17,6 +17,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javax.xml.parsers.DocumentBuilder;
@@ -157,7 +158,8 @@ public class SlideShowMakerView {
         Stage languageStage = new Stage();
         ComboBox languageBox = new ComboBox();
         Button OK = new Button("OK");
-        HBox hb= new HBox(languageBox,OK);
+        Text language = new Text("Select a Language: ");
+        HBox hb= new HBox(language,languageBox,OK);
         Scene languageScene = new Scene(hb);
         languageStage.setScene(languageScene);
         languageBox.getItems().addAll(
@@ -216,9 +218,9 @@ public class SlideShowMakerView {
 	slideEditToolbar = new VBox();
 	slideEditToolbar.getStyleClass().add(CSS_CLASS_SLIDE_SHOW_EDIT_VBOX);
 	addSlideButton = this.initChildButton(slideEditToolbar,		ICON_ADD_SLIDE,	    TOOLTIP_ADD_SLIDE,	    CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
-	moveSlideUpButton= this.initChildButton(slideEditToolbar, ICON_MOVE_UP , TOOLTIP_MOVE_UP , CSS_CLASS_VERTICAL_TOOLBAR_BUTTON , false);
-        moveSlideDownButton=this.initChildButton(slideEditToolbar, ICON_MOVE_DOWN, TOOLTIP_MOVE_DOWN , CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
-        removeSlideButton = this.initChildButton(slideEditToolbar, ICON_REMOVE_SLIDE ,TOOLTIP_REMOVE_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+	moveSlideUpButton= this.initChildButton(slideEditToolbar, ICON_MOVE_UP , TOOLTIP_MOVE_UP , CSS_CLASS_VERTICAL_TOOLBAR_BUTTON , true);
+        moveSlideDownButton=this.initChildButton(slideEditToolbar, ICON_MOVE_DOWN, TOOLTIP_MOVE_DOWN , CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, true );
+        removeSlideButton = this.initChildButton(slideEditToolbar, ICON_REMOVE_SLIDE ,TOOLTIP_REMOVE_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, true);
         
 	// AND THIS WILL GO IN THE CENTER
 	slidesEditorPane = new VBox();
@@ -234,6 +236,7 @@ public class SlideShowMakerView {
         
         titleField.textProperty().addListener((observable,oldValue,newValue)->{
           slideShow.setTitle(newValue);
+            fileController.markAsEdited();
             
         });
     }
@@ -243,6 +246,7 @@ public class SlideShowMakerView {
 	fileController = new FileController(this, fileManager);
 	newSlideShowButton.setOnAction(e -> {
 	    fileController.handleNewSlideShowRequest();
+            fileController.markAsEdited();
 	});
 	loadSlideShowButton.setOnAction(e -> {
 	    fileController.handleLoadSlideShowRequest();
@@ -261,15 +265,20 @@ public class SlideShowMakerView {
 	editController = new SlideShowEditController(this);
 	addSlideButton.setOnAction(e -> {
 	    editController.processAddSlideRequest();
+            fileController.markAsEdited();
 	});
         moveSlideUpButton.setOnAction(e-> {
            editController. moveSlideUpRequest();
+           
+            fileController.markAsEdited();
         });
         moveSlideDownButton.setOnAction(e-> {
             editController.moveSlideDownRequest();
+            fileController.markAsEdited();
         });
         removeSlideButton.setOnAction(e-> {
             editController.removeSlideRequest();
+            fileController.markAsEdited();
         });
         
     }
@@ -291,7 +300,7 @@ public class SlideShowMakerView {
 	exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
        
         fileToolbarPane.getChildren().add(titleField);
-        titleField.setText("Click to add title");
+        titleField.setPromptText("Click to add title");
    
     }
 

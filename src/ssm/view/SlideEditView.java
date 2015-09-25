@@ -77,13 +77,16 @@ public class SlideEditView extends HBox {
         
         captionTextField.textProperty().addListener((observable,oldValue,newValue)->{
             slide.setCaption(newValue);
-            
+            ssm.updateToolbarControls(false);
         });
         
         
         this.setOnMouseClicked(e-> {    //THIS SETS CLICKED ON SLIDE TO SELECTEDSLIDE
             ssm.slideShow.setSelectedSlide(initSlide);
             
+        ssm.removeSlideButton.setDisable(false);
+        ssm.moveSlideUpButton.setDisable(false);
+        ssm.moveSlideDownButton.setDisable(false);
             });
         
     }

@@ -51,5 +51,6 @@ public class ImageSelectionController {
 	else {
 	    // @todo provide error message for no files selected
 	}
+        
     }
 }
