@@ -47,10 +47,6 @@ public class ImageSelectionController {
 	    String fileName = file.getName();
 	    slideToEdit.setImage(path, fileName);
 	    view.updateSlideImage();
-	}	    
-	else {
-	    // @todo provide error message for no files selected
 	}
-        
     }
 }

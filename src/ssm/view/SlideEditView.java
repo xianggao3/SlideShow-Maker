@@ -2,7 +2,6 @@ package ssm.view;
 
 import java.io.File;
 import java.net.URL;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -14,9 +13,9 @@ import ssm.LanguagePropertyType;
 import static ssm.StartupConstants.CSS_CLASS_SLIDE_EDIT_VIEW;
 import static ssm.StartupConstants.DEFAULT_THUMBNAIL_WIDTH;
 import ssm.controller.ImageSelectionController;
+import ssm.error.ErrorHandler;
 import ssm.model.Slide;
 import static ssm.file.SlideShowFileManager.SLASH;
-import ssm.model.SlideShowModel;
 
 /**
  * This UI component has the controls for editing a single slide
@@ -46,22 +45,23 @@ public class SlideEditView extends HBox {
      * 
      * @param initSlide The slide to be edited by this component.
      */
-    public SlideEditView(Slide initSlide,SlideShowMakerView ssm) {
+    public SlideEditView(Slide initSlide) {
 	// FIRST SELECT THE CSS STYLE CLASS FOR THIS CONTAINER
 	this.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW);
 	
 	// KEEP THE SLIDE FOR LATER
 	slide = initSlide;
-        
-		// MAKE SURE WE ARE DISPLAYING THE PROPER IMAGE
+	
+	// MAKE SURE WE ARE DISPLAYING THE PROPER IMAGE
 	imageSelectionView = new ImageView();
 	updateSlideImage();
 
-    	// SETUP THE CAPTION CONTROLS
+	// SETUP THE CAPTION CONTROLS
 	captionVBox = new VBox();
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
 	captionLabel = new Label(props.getProperty(LanguagePropertyType.LABEL_CAPTION));
 	captionTextField = new TextField();
+	captionTextField.setText(slide.getCaption());
 	captionVBox.getChildren().add(captionLabel);
 	captionVBox.getChildren().add(captionTextField);
 
@@ -74,21 +74,10 @@ public class SlideEditView extends HBox {
 	imageSelectionView.setOnMousePressed(e -> {
 	    imageController.processSelectImage(slide, this);
 	});
-        
-        captionTextField.textProperty().addListener((observable,oldValue,newValue)->{
-            slide.setCaption(newValue);
-            ssm.updateToolbarControls(false);
-        });
-        
-        
-        this.setOnMouseClicked(e-> {    //THIS SETS CLICKED ON SLIDE TO SELECTEDSLIDE
-            ssm.slideShow.setSelectedSlide(initSlide);
-            
-        ssm.removeSlideButton.setDisable(false);
-        ssm.moveSlideUpButton.setDisable(false);
-        ssm.moveSlideDownButton.setDisable(false);
-            });
-        
+	captionTextField.textProperty().addListener(e -> {
+	    String text = captionTextField.getText();
+	    slide.setCaption(text);	    
+	});
     }
     
     /**
@@ -111,7 +100,8 @@ public class SlideEditView extends HBox {
 	    imageSelectionView.setFitWidth(scaledWidth);
 	    imageSelectionView.setFitHeight(scaledHeight);
 	} catch (Exception e) {
-	    // @todo - use Error handler to respond to missing image
+	    ErrorHandler eH = new ErrorHandler(null);
+            eH.processError(LanguagePropertyType.ERROR_UNEXPECTED);
 	}
     }    
 }

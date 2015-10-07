@@ -2,34 +2,16 @@ package ssm.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import properties_manager.PropertiesManager;
-import static ssm.StartupConstants.ICON_NEXT;
-import static ssm.StartupConstants.ICON_PREVIOUS;
-import static ssm.StartupConstants.PATH_ICONS;
+import ssm.LanguagePropertyType;
 import ssm.model.SlideShowModel;
 import ssm.error.ErrorHandler;
 import ssm.file.SlideShowFileManager;
 import ssm.view.SlideShowMakerView;
 import static ssm.StartupConstants.PATH_SLIDE_SHOWS;
+import ssm.view.SlideShowViewer;
+
+
 /**
  * This class serves as the controller for all file toolbar operations,
  * driving the loading and saving of slide shows, among other things.
@@ -38,7 +20,6 @@ import static ssm.StartupConstants.PATH_SLIDE_SHOWS;
  */
 public class FileController {
 
-                int start = 0;
     // WE WANT TO KEEP TRACK OF WHEN SOMETHING HAS NOT BEEN SAVED
     private boolean saved;
 
@@ -91,12 +72,12 @@ public class FileController {
                 // THE APPROPRIATE CONTROLS
                 ui.updateToolbarControls(saved);
 
-                // TELL THE USER THE SLIDE SHOW HAS BEEN CREATED
-                // @todo
+		// MAKE SURE THE TITLE CONTROLS ARE ENABLED
+		ui.reloadTitleControls();		
             }
         } catch (IOException ioe) {
             ErrorHandler eH = ui.getErrorHandler();
-            // @todo provide error message
+            eH.processError(LanguagePropertyType.ERROR_UNEXPECTED);
         }
     }
 
@@ -120,7 +101,7 @@ public class FileController {
             }
         } catch (IOException ioe) {
             ErrorHandler eH = ui.getErrorHandler();
-            //@todo provide error message
+            eH.processError(LanguagePropertyType.ERROR_DATA_FILE_LOADING);
         }
     }
 
@@ -145,9 +126,17 @@ public class FileController {
 	    return true;
         } catch (IOException ioe) {
             ErrorHandler eH = ui.getErrorHandler();
-            // @todo
+            eH.processError(LanguagePropertyType.ERROR_UNEXPECTED);
 	    return false;
         }
+    }
+
+    /**
+     * This method shows the current slide show in a separate window.
+     */
+    public void handleViewSlideShowRequest() throws IOException {
+	SlideShowViewer viewer = new SlideShowViewer(ui);
+	viewer.startSlideShow();
     }
 
      /**
@@ -170,95 +159,8 @@ public class FileController {
             }
         } catch (IOException ioe) {
             ErrorHandler eH = ui.getErrorHandler();
-            // @todo
+            eH.processError(LanguagePropertyType.ERROR_UNEXPECTED);
         }
-    }
-    public Image ImgFromPath(){
-        String imgpath = ui.getSlideShow().getSlides().get(start).getImagePath()+"/"+ui.getSlideShow().getSlides().get(start).getImageFileName();
-        File file1 = new File(imgpath);
-        Image img;
-        URL fileUrl=null;
-                    try {
-                        fileUrl = file1.toURI().toURL();
-                    } catch (MalformedURLException ex) {
-                        Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-        img=new Image(fileUrl.toExternalForm());
-        return img;
-    }
-    
-    public void handleViewSlideShowRequest(){
-        try{
-            PropertiesManager props =  PropertiesManager.getPropertiesManager();
-            Stage viewSS = new Stage();
-            BorderPane borderscene = new BorderPane();
-            
-            
-            Text captionText= new Text("Comments: "+ui.getSlideShow().getSlides().get(start).getCaption());
-            Text titleText= new Text(ui.getSlideShow().getTitle());
-            titleText.setUnderline(true);
-            titleText.setFont(Font.font ("Verdana", 30));
-            borderscene.setBottom(captionText);
-            HBox top = new HBox(titleText);
-            Button prevButton = new Button();
-            Button nexButton = new Button();
-            
-            String prevImg = "file:"+PATH_ICONS+ICON_PREVIOUS;
-            String nexImg= "file:"+PATH_ICONS+ICON_NEXT;
-            
-            Image prevButtonImg = new Image(prevImg);
-            Image nexButtonImg = new Image(nexImg);
-            
-            FlowPane imagPane = new FlowPane(new ImageView(ImgFromPath()));
-            borderscene.setCenter(imagPane);
-            borderscene.setTop(top);
-            top.setAlignment(Pos.CENTER);
-            
-            prevButton.setGraphic(new ImageView(prevButtonImg));
-            prevButton.setDisable(false);
-            prevButton.setOnAction(e-> {
-                if( start != 0){
-                    start--;
-                    captionText.setText("Comments: "+ui.getSlideShow().getSlides().get(start).getCaption());
-                    imagPane.getChildren().clear();
-                    imagPane.getChildren().add(new ImageView(ImgFromPath()));
-                    borderscene.setBottom(captionText);
-                }
-            });
-            
-            nexButton.setGraphic(new ImageView(nexButtonImg));
-            nexButton.setDisable(false);
-            nexButton.setOnAction(e-> {
-               if(start!= ui.getSlideShow().getSlides().size()){
-                   start++;
-                   
-                    captionText.setText("Comments: "+ui.getSlideShow().getSlides().get(start).getCaption());
-                   imagPane.getChildren().clear();
-                   imagPane.getChildren().add(new ImageView(ImgFromPath()));
-                   borderscene.setBottom(captionText);
-               } 
-            });
-            captionText.setFont(Font.font ("Verdana", 20));
-            VBox left = new VBox(prevButton);
-            VBox right = new VBox(nexButton);
-            borderscene.setLeft(left);
-            borderscene.setRight(right);
-            left.setAlignment(Pos.CENTER);
-            right.setAlignment(Pos.CENTER);
-            
-            
-            Scene hScene = new Scene(borderscene);
-            viewSS.setScene(hScene);
-            viewSS.show();
-            
-            boolean continueToView=true;
-            if(!saved){
-                continueToView=promptToSave();
-            }
-        }catch(IOException ioe){
-            ErrorHandler eH=ui.getErrorHandler();
-        }
-        
     }
 
     /**
@@ -278,7 +180,7 @@ public class FileController {
      */
     private boolean promptToSave() throws IOException {
         // PROMPT THE USER TO SAVE UNSAVED WORK
-        boolean saveWork = true; // @todo change this to prompt
+        boolean saveWork = true; 
 
         // IF THE USER SAID YES, THEN SAVE BEFORE MOVING ON
         if (saveWork) {
@@ -314,12 +216,12 @@ public class FileController {
             try {
 		SlideShowModel slideShowToLoad = ui.getSlideShow();
                 slideShowIO.loadSlideShow(slideShowToLoad, selectedFile.getAbsolutePath());
-                ui.reloadSlideShowPane(slideShowToLoad);
+                ui.reloadSlideShowPane();
                 saved = true;
                 ui.updateToolbarControls(saved);
             } catch (Exception e) {
                 ErrorHandler eH = ui.getErrorHandler();
-                // @todo
+		eH.processError(LanguagePropertyType.ERROR_UNEXPECTED);
             }
         }
     }

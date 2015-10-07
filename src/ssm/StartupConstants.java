@@ -7,12 +7,15 @@ package ssm;
  * @author McKilla Gorilla & _____________
  */
 public class StartupConstants {
+    public static String ENGLISH_LANG = "English";
+    public static String SPANISH_LANG = "Spanish";
 
     // WE'LL LOAD ALL THE UI AND LANGUAGE PROPERTIES FROM FILES,
     // BUT WE'LL NEED THESE VALUES TO START THE PROCESS
 
     public static String PROPERTY_TYPES_LIST = "property_types.txt";
-    public static String UI_PROPERTIES_FILE_NAME = "properties_EN.xml";
+    public static String UI_PROPERTIES_FILE_NAME_English = "properties_EN.xml";
+    public static String UI_PROPERTIES_FILE_NAME_Finnish = "properties_ES.xml";
     public static String PROPERTIES_SCHEMA_FILE_NAME = "properties_schema.xsd";
     public static String PATH_DATA = "./data/";
     public static String PATH_SLIDE_SHOWS = PATH_DATA + "slide_shows/";
@@ -23,6 +26,7 @@ public class StartupConstants {
     public static String STYLE_SHEET_UI = PATH_CSS + "SlideShowMakerStyle.css";
 
     // HERE ARE THE LANGUAGE INDEPENDENT GUI ICONS
+    public static String ICON_WINDOW_LOGO = "SSM_Logo.png";
     public static String ICON_NEW_SLIDE_SHOW = "New.png";
     public static String ICON_LOAD_SLIDE_SHOW = "Load.png";
     public static String ICON_SAVE_SLIDE_SHOW = "Save.png";
@@ -35,7 +39,7 @@ public class StartupConstants {
     public static String ICON_PREVIOUS = "Previous.png";
     public static String ICON_NEXT = "Next.png";
 
-    // @todo
+    // UI SETTINGS
     public static String    DEFAULT_SLIDE_IMAGE = "DefaultStartSlide.png";
     public static int	    DEFAULT_THUMBNAIL_WIDTH = 200;
     public static int	    DEFAULT_SLIDE_SHOW_HEIGHT = 500;
@@ -45,8 +49,10 @@ public class StartupConstants {
     public static String    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON = "horizontal_toolbar_button";
     public static String    CSS_CLASS_SLIDE_SHOW_EDIT_VBOX = "slide_show_edit_vbox";
     public static String    CSS_CLASS_SLIDE_EDIT_VIEW = "slide_edit_view";
-    public static String    CSS_CLASS_SLIDE_EDIT_VIEW_SELECTED = "slide_edit_view2";
+    public static String    CSS_CLASS_SELECTED_SLIDE_EDIT_VIEW = "selected_slide_edit_view";
     
     // UI LABELS
     public static String    LABEL_SLIDE_SHOW_TITLE = "slide_show_title";
+    public static String    LABEL_LANGUAGE_SELECTION_PROMPT = "Select a Language:";
+    public static String    OK_BUTTON_TEXT = "OK";
 }

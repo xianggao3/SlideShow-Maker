@@ -7,33 +7,33 @@
 
 .slide_show_edit_vbox {
     -fx-background-radius: 5.0;
-    -fx-background-color: rgb(230, 50, 50);
-    -fx-border-color: rgb(50, 5, 5);
+    -fx-background-color: rgb(161, 162, 242);
+    -fx-border-color: rgb(200, 200, 200);
 }
 
 .slide_edit_view {
     -fx-background-radius: 10.0;
-    -fx-background-color: rgb(90, 240, 90);
+    -fx-background-color: rgb(241, 221, 56);
     -fx-border-color: rgb(70, 5, 5);
     -fx-border-thickness: 10px;
     -fx-spacing: 60px;
 }
 
+.selected_slide_edit_view {
+    -fx-background-radius: 10.0;
+    -fx-background-color: rgb(242, 240, 161);
+    -fx-border-color: rgb(200, 200, 200);
+    -fx-border-thickness: 10px;
+    -fx-spacing: 60px;
+}
 .vertical_toolbar_button {
-    -fx-background-color: rgb(250, 130, 130);
+    -fx-background-color: rgb(124, 136, 151);
     -fx-padding: 10px 10px 10px 10px;
     -fx-spacing: 50px;
+    
 }
 
 .horizontal_toolbar_button {
     -fx-padding-left: 10px;
     -fx-padding-right: 20px;
-}
-
-.slide_edit_view2 {
-    -fx-background-radius: 10.0;
-    -fx-background-color: rgb(200, 240, 90);
-    -fx-border-color: rgb(5, 70, 5);
-    -fx-border-thickness: 20px;
-    -fx-spacing: 60px;
 }

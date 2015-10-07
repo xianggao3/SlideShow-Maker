@@ -1,12 +1,13 @@
 package ssm.view;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.event.ActionEvent;
+import java.io.File;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -17,12 +18,11 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javax.xml.parsers.DocumentBuilder;
 import properties_manager.PropertiesManager;
 import ssm.LanguagePropertyType;
+import static ssm.LanguagePropertyType.LABEL_SLIDESHOW_TITLE;
 import static ssm.LanguagePropertyType.TOOLTIP_ADD_SLIDE;
 import static ssm.LanguagePropertyType.TOOLTIP_EXIT;
 import static ssm.LanguagePropertyType.TOOLTIP_LOAD_SLIDE_SHOW;
@@ -33,8 +33,8 @@ import static ssm.LanguagePropertyType.TOOLTIP_REMOVE_SLIDE;
 import static ssm.LanguagePropertyType.TOOLTIP_SAVE_SLIDE_SHOW;
 import static ssm.LanguagePropertyType.TOOLTIP_VIEW_SLIDE_SHOW;
 import static ssm.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
+import static ssm.StartupConstants.CSS_CLASS_SELECTED_SLIDE_EDIT_VIEW;
 import static ssm.StartupConstants.CSS_CLASS_SLIDE_EDIT_VIEW;
-import static ssm.StartupConstants.CSS_CLASS_SLIDE_EDIT_VIEW_SELECTED;
 import static ssm.StartupConstants.CSS_CLASS_SLIDE_SHOW_EDIT_VBOX;
 import static ssm.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static ssm.StartupConstants.ICON_ADD_SLIDE;
@@ -46,18 +46,14 @@ import static ssm.StartupConstants.ICON_NEW_SLIDE_SHOW;
 import static ssm.StartupConstants.ICON_REMOVE_SLIDE;
 import static ssm.StartupConstants.ICON_SAVE_SLIDE_SHOW;
 import static ssm.StartupConstants.ICON_VIEW_SLIDE_SHOW;
-import static ssm.StartupConstants.PATH_DATA;
 import static ssm.StartupConstants.PATH_ICONS;
-import static ssm.StartupConstants.PROPERTIES_SCHEMA_FILE_NAME;
 import static ssm.StartupConstants.STYLE_SHEET_UI;
-import static ssm.StartupConstants.UI_PROPERTIES_FILE_NAME;
 import ssm.controller.FileController;
 import ssm.controller.SlideShowEditController;
 import ssm.model.Slide;
 import ssm.model.SlideShowModel;
 import ssm.error.ErrorHandler;
 import ssm.file.SlideShowFileManager;
-import xml_utilities.InvalidXMLFileFormatException;
 
 /**
  * This class provides the User Interface for this application,
@@ -68,7 +64,6 @@ import xml_utilities.InvalidXMLFileFormatException;
  */
 public class SlideShowMakerView {
 
-    PropertiesManager props = PropertiesManager.getPropertiesManager();String es = "properties_ES.xml";
     // THIS IS THE MAIN APPLICATION UI WINDOW AND ITS SCENE GRAPH
     Stage primaryStage;
     Scene primaryScene;
@@ -84,7 +79,6 @@ public class SlideShowMakerView {
     Button saveSlideShowButton;
     Button viewSlideShowButton;
     Button exitButton;
-    TextField titleField= new TextField();
     
     // WORKSPACE
     HBox workspace;
@@ -92,9 +86,14 @@ public class SlideShowMakerView {
     // THIS WILL GO IN THE LEFT SIDE OF THE SCREEN
     VBox slideEditToolbar;
     Button addSlideButton;
+    Button removeSlideButton;
     Button moveSlideUpButton;
     Button moveSlideDownButton;
-    Button removeSlideButton;
+    
+    // FOR THE SLIDE SHOW TITLE
+    FlowPane titlePane;
+    Label titleLabel;
+    TextField titleTextField;
     
     // AND THIS WILL GO IN THE CENTER
     ScrollPane slidesEditorScrollPane;
@@ -153,42 +152,7 @@ public class SlideShowMakerView {
      * @param windowTitle The title for this window.
      */
     public void startUI(Stage initPrimaryStage, String windowTitle) {
-        
-        //WRITE ADD LANGUAGE HERE
-        Stage languageStage = new Stage();
-        ComboBox languageBox = new ComboBox();
-        Button OK = new Button("OK");
-        Text language = new Text("Select a Language: ");
-        HBox hb= new HBox(language,languageBox,OK);
-        Scene languageScene = new Scene(hb);
-        languageStage.setScene(languageScene);
-        languageBox.getItems().addAll(
-                "English",
-                "Spanish"   );
-        OK.setOnAction(e-> {
-            if(languageBox.getValue().equals("Spanish")){
-                props.addProperty(PropertiesManager.DATA_PATH_PROPERTY, PATH_DATA);
-            try {
-                props.loadProperties(es, PROPERTIES_SCHEMA_FILE_NAME);
-            } catch (InvalidXMLFileFormatException ex) {
-                Logger.getLogger(SlideShowMakerView.class.getName()).log(Level.SEVERE, null, ex);
-           
-            }
-            }
-            else if(languageBox.getValue().equals("English")){
-                props.addProperty(PropertiesManager.DATA_PATH_PROPERTY, PATH_DATA);
-            try {
-                 props.loadProperties(UI_PROPERTIES_FILE_NAME, PROPERTIES_SCHEMA_FILE_NAME);
-            } catch (InvalidXMLFileFormatException ex) {
-                Logger.getLogger(SlideShowMakerView.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            }
-            languageStage.close();
-        });
-        languageStage.showAndWait();
-        
-        
-        // THE TOOLBAR ALONG THE NORTH
+	// THE TOOLBAR ALONG THE NORTH
 	initFileToolbar();
 
         // INIT THE CENTER WORKSPACE CONTROLS BUT DON'T ADD THEM
@@ -202,11 +166,6 @@ public class SlideShowMakerView {
 	// KEEP THE WINDOW FOR LATER
 	primaryStage = initPrimaryStage;
 	initWindow(windowTitle);
-        
-        
-        
-        
-        
     }
 
     // UI SETUP HELPER METHODS
@@ -218,27 +177,18 @@ public class SlideShowMakerView {
 	slideEditToolbar = new VBox();
 	slideEditToolbar.getStyleClass().add(CSS_CLASS_SLIDE_SHOW_EDIT_VBOX);
 	addSlideButton = this.initChildButton(slideEditToolbar,		ICON_ADD_SLIDE,	    TOOLTIP_ADD_SLIDE,	    CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
-	moveSlideUpButton= this.initChildButton(slideEditToolbar, ICON_MOVE_UP , TOOLTIP_MOVE_UP , CSS_CLASS_VERTICAL_TOOLBAR_BUTTON , true);
-        moveSlideDownButton=this.initChildButton(slideEditToolbar, ICON_MOVE_DOWN, TOOLTIP_MOVE_DOWN , CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, true );
-        removeSlideButton = this.initChildButton(slideEditToolbar, ICON_REMOVE_SLIDE ,TOOLTIP_REMOVE_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, true);
-        
+	removeSlideButton = this.initChildButton(slideEditToolbar,	ICON_REMOVE_SLIDE,  TOOLTIP_REMOVE_SLIDE,   CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
+	moveSlideUpButton = this.initChildButton(slideEditToolbar,	ICON_MOVE_UP,	    TOOLTIP_MOVE_UP,	    CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
+	moveSlideDownButton = this.initChildButton(slideEditToolbar,	ICON_MOVE_DOWN,	    TOOLTIP_MOVE_DOWN,	    CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
+	
 	// AND THIS WILL GO IN THE CENTER
 	slidesEditorPane = new VBox();
 	slidesEditorScrollPane = new ScrollPane(slidesEditorPane);
+	initTitleControls();
 	
 	// NOW PUT THESE TWO IN THE WORKSPACE
 	workspace.getChildren().add(slideEditToolbar);
 	workspace.getChildren().add(slidesEditorScrollPane);
-        
-        slidesEditorPane.setOnMouseClicked(e-> {
-            reloadSlideShowPane(slideShow);
-        });
-        
-        titleField.textProperty().addListener((observable,oldValue,newValue)->{
-          slideShow.setTitle(newValue);
-            fileController.markAsEdited();
-            
-        });
     }
 
     private void initEventHandlers() {
@@ -246,7 +196,6 @@ public class SlideShowMakerView {
 	fileController = new FileController(this, fileManager);
 	newSlideShowButton.setOnAction(e -> {
 	    fileController.handleNewSlideShowRequest();
-            fileController.markAsEdited();
 	});
 	loadSlideShowButton.setOnAction(e -> {
 	    fileController.handleLoadSlideShowRequest();
@@ -254,33 +203,27 @@ public class SlideShowMakerView {
 	saveSlideShowButton.setOnAction(e -> {
 	    fileController.handleSaveSlideShowRequest();
 	});
+	viewSlideShowButton.setOnAction(e -> {
+	    fileController.handleViewSlideShowRequest();
+	});
 	exitButton.setOnAction(e -> {
 	    fileController.handleExitRequest();
 	});
-        viewSlideShowButton.setOnAction((ActionEvent e)->{
-           fileController.handleViewSlideShowRequest(); 
-        });
 	
 	// THEN THE SLIDE SHOW EDIT CONTROLS
 	editController = new SlideShowEditController(this);
 	addSlideButton.setOnAction(e -> {
 	    editController.processAddSlideRequest();
-            fileController.markAsEdited();
 	});
-        moveSlideUpButton.setOnAction(e-> {
-           editController. moveSlideUpRequest();
-           
-            fileController.markAsEdited();
-        });
-        moveSlideDownButton.setOnAction(e-> {
-            editController.moveSlideDownRequest();
-            fileController.markAsEdited();
-        });
-        removeSlideButton.setOnAction(e-> {
-            editController.removeSlideRequest();
-            fileController.markAsEdited();
-        });
-        
+	removeSlideButton.setOnAction(e -> {
+	    editController.processRemoveSlideRequest();
+	});
+	moveSlideUpButton.setOnAction(e -> {
+	    editController.processMoveSlideUpRequest();
+	});
+	moveSlideDownButton.setOnAction(e -> {
+	    editController.processMoveSlideDownRequest();
+	});
     }
 
     /**
@@ -289,7 +232,6 @@ public class SlideShowMakerView {
      */
     private void initFileToolbar() {
 	fileToolbarPane = new FlowPane();
-
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
 	// START AS ENABLED (false), WHILE OTHERS DISABLED (true)
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -298,10 +240,7 @@ public class SlideShowMakerView {
 	saveSlideShowButton = initChildButton(fileToolbarPane, ICON_SAVE_SLIDE_SHOW,	TOOLTIP_SAVE_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
 	viewSlideShowButton = initChildButton(fileToolbarPane, ICON_VIEW_SLIDE_SHOW,	TOOLTIP_VIEW_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
 	exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-       
-        fileToolbarPane.getChildren().add(titleField);
-        titleField.setPromptText("Click to add title");
-   
+        
     }
 
     private void initWindow(String windowTitle) {
@@ -317,8 +256,6 @@ public class SlideShowMakerView {
 	primaryStage.setY(bounds.getMinY());
 	primaryStage.setWidth(bounds.getWidth());
 	primaryStage.setHeight(bounds.getHeight());
-        primaryStage.getIcons().add(new Image("http://www.softwarecrew.com/wp-content/uploads/2013/07/icon200-1752.png"));
-        
 
         // SETUP THE UI, NOTE WE'LL ADD THE WORKSPACE LATER
 	ssmPane = new BorderPane();
@@ -330,6 +267,15 @@ public class SlideShowMakerView {
 	primaryScene.getStylesheets().add(STYLE_SHEET_UI);
 	primaryStage.setScene(primaryScene);
 	primaryStage.show();
+    
+        File sites =new File(".\\sites");
+        if (!sites.exists()) {
+		if (sites.mkdir()) {
+			System.out.println("Directory is created!");
+		} else {
+			System.out.println("Failed to create directory!");
+		}
+	}
     }
     
     /**
@@ -370,8 +316,16 @@ public class SlideShowMakerView {
 	saveSlideShowButton.setDisable(saved);
 	viewSlideShowButton.setDisable(false);
 	
+	updateSlideshowEditToolbarControls();
+    }
+    
+    public void updateSlideshowEditToolbarControls() {
 	// AND THE SLIDESHOW EDIT TOOLBAR
 	addSlideButton.setDisable(false);
+	boolean slideSelected = slideShow.isSlideSelected();
+	removeSlideButton.setDisable(!slideSelected);
+	moveSlideUpButton.setDisable(!slideSelected);
+	moveSlideDownButton.setDisable(!slideSelected);	
     }
 
     /**
@@ -380,21 +334,46 @@ public class SlideShowMakerView {
      * 
      * @param slideShowToLoad SLide show being reloaded.
      */
-    public void reloadSlideShowPane(SlideShowModel slideShowToLoad) {
+    public void reloadSlideShowPane() {
 	slidesEditorPane.getChildren().clear();
-	for (Slide slide : slideShowToLoad.getSlides()) {
-	    SlideEditView slideEditor = new SlideEditView(slide,this);
+	reloadTitleControls();
+	for (Slide slide : slideShow.getSlides()) {
+	    SlideEditView slideEditor = new SlideEditView(slide);
+	    if (slideShow.isSelectedSlide(slide))
+		slideEditor.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW);
+	    else
+		slideEditor.getStyleClass().add(CSS_CLASS_SELECTED_SLIDE_EDIT_VIEW);
 	    slidesEditorPane.getChildren().add(slideEditor);
-            slideEditor.captionTextField.setText(slide.getCaption());
-            titleField.setText(slideShowToLoad.getTitle());
-            //highlight borders here
-            if(slide==slideShowToLoad.getSelectedSlide()){
-                slideEditor.getStyleClass().clear();
-                slideEditor.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW_SELECTED);
-                
-            }
-            
-	};
-               
+	    slideEditor.setOnMousePressed(e -> {
+		slideShow.setSelectedSlide(slide);
+		this.reloadSlideShowPane();
+	    });
+	}
+	updateSlideshowEditToolbarControls();
     }
+    
+    private void initTitleControls() {
+	PropertiesManager props = PropertiesManager.getPropertiesManager();
+	String labelPrompt = props.getProperty(LABEL_SLIDESHOW_TITLE);
+	titlePane = new FlowPane();
+	titleLabel = new Label(labelPrompt);
+	titleTextField = new TextField();
+	
+	titlePane.getChildren().add(titleLabel);
+	titlePane.getChildren().add(titleTextField);
+	
+	String titlePrompt = props.getProperty(LanguagePropertyType.LABEL_SLIDESHOW_TITLE);
+	titleTextField.setText(titlePrompt);
+	
+	titleTextField.textProperty().addListener(e -> {
+	    slideShow.setTitle(titleTextField.getText());
+	});
+    }
+    
+    public void reloadTitleControls() {
+	slidesEditorPane.getChildren().add(titlePane);
+	titleTextField.setText(slideShow.getTitle());
+    }
+    
+
 }
