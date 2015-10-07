@@ -1,6 +1,9 @@
 package ssm.view;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -204,7 +207,11 @@ public class SlideShowMakerView {
 	    fileController.handleSaveSlideShowRequest();
 	});
 	viewSlideShowButton.setOnAction(e -> {
-	    fileController.handleViewSlideShowRequest();
+            try {
+                fileController.handleViewSlideShowRequest();
+            } catch (IOException ex) {
+                Logger.getLogger(SlideShowMakerView.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	});
 	exitButton.setOnAction(e -> {
 	    fileController.handleExitRequest();

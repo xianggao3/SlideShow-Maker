@@ -111,11 +111,12 @@ public class SlideShowViewer extends Stage {
         
         
         WebView browser = new WebView();
-        WebEngine webEngine = browser.getEngine();
         String path = System.getProperty("user.dir");  
         path.replace("\\\\", "/");  
         path +=  "/html/index.html";  
         browser.getEngine().load("file:///" + path);   
+        //browser.getEngine().load("http://www.popuptest.com/"); 
+        
         Scene scene = new Scene(browser);
 	setScene(scene);
 	this.showAndWait();
