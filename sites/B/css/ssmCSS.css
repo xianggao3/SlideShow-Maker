@@ -11,50 +11,36 @@ and open the template in the editor.
             background-color:#3B5998;
             color:white;
             text-align:center;
-            padding:5px;
+            padding:0.5px;
             box-shadow: 0px 0px 3px 3px #000;
             border-radius: 5px;
         }
         #leftbutton {
             line-height:30px;
+            height:450px;
+            width:50px;
             float:left;
-            margin-top:0%;
-            margin-right: 10%;
-            margin-left: 0%;
-            border: 3px solid #8AC007;
-
+            padding:5px;
+        }
+        #prev{
+            vertical-align: middle;
+        }
+        #next{
+            vertical-align: middle;
+        }
+        #image {
+          
+            float:left;
+            padding:10px;
+            text-align:center;	 	 
         }
         #rightbutton {
             line-height:30px;
-            margin-top:0%;
-            margin-right: 0%;
-            margin-left: 90%;
-            border: 3px solid #8AC007;
-
+            height:450px;
+            width:50px;
+            float:right;
+            padding:5px;
         }
-        #prev{
-        }
-        #next{
-        }
-        #middle {
-          
-            padding:10px;
-            text-align:center;
-            border: 3px solid #8AC007;
-
-        }
-       
-        
-        #playpause{
-            position: relative;
-            float:bottom;
-            border: 3px solid #8AC007;
-            margin-left:10%;
-            margin-right:10%;
-            margin-bottom:30px;
-
-        }
-        
         #footer {
             background-color:#3B5998;
             color:white;

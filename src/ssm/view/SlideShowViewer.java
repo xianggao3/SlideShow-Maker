@@ -93,7 +93,7 @@ public class SlideShowViewer extends Stage {
         File jsSS = new File("./sites/"+slides.getTitle()+"/js/js.js");
         File jsonSS = new File("./sites/"+slides.getTitle()+"/json.json");
         
-        if (!thisSS.exists()) {
+        if (!thisSS.exists()) {//makes the slide directory and adds html and json all into sites directory
 		if (thisSS.mkdir()) {
 			System.out.println("Directory is created!");
                         
@@ -121,6 +121,10 @@ public class SlideShowViewer extends Stage {
         path +=  "/html/index.html";  
         browser.getEngine().load("file:///" + path);   
                
+        
+        
+        
+        
         Scene scene = new Scene(browser);
 	setScene(scene);
 	this.showAndWait();
