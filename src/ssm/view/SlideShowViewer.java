@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javax.json.JsonObject;
 import ssm.LanguagePropertyType;
 import static ssm.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
 import static ssm.StartupConstants.DEFAULT_SLIDE_SHOW_HEIGHT;
@@ -76,47 +77,50 @@ public class SlideShowViewer extends Stage {
      * first slide in the slideshow displayed.
      */
     public void startSlideShow() throws IOException {
-        
+        //original files for html,json,etc.
         File htmlFile = new File("./html/index.html");
-        File thisSS =new File(".\\sites\\"+slides.getTitle());
-        File htmlSS = new File(".\\sites\\"+slides.getTitle()+"\\index.html");
+        File cssFile = new File("./html/ssmCSS.css");
+        File jsFile = new File("./html/js.js");
+        File jsonFile = new File("./data/slide_shows/"+slides.getTitle()+".json");
+        //new folders for css,imgs,and js
+        File cssFolder =new File("./sites/"+slides.getTitle()+"/css");
+        File imgFolder =new File("./sites/"+slides.getTitle()+"/img");
+        File jsFolder =new File("./sites/"+slides.getTitle()+"/js");
+        //new files being generated
+        File thisSS =new File("./sites/"+slides.getTitle());
+        File htmlSS = new File("./sites/"+slides.getTitle()+"/index.html");
+        File cssSS = new File("./sites/"+slides.getTitle()+"/css/ssmCSS.css");
+        File jsSS = new File("./sites/"+slides.getTitle()+"/js/js.js");
+        File jsonSS = new File("./sites/"+slides.getTitle()+"/json.json");
+        
         if (!thisSS.exists()) {
 		if (thisSS.mkdir()) {
 			System.out.println("Directory is created!");
-                        File cssFolder =new File(".\\sites\\"+slides.getTitle()+"\\css");
-                        File imgFolder =new File(".\\sites\\"+slides.getTitle()+"\\img");
-                        File jsFolder =new File(".\\sites\\"+slides.getTitle()+"\\js");
-                        cssFolder.mkdir();
-                        imgFolder.mkdir();
-                        jsFolder.mkdir();
+                        
                         copyFile(htmlFile,htmlSS);
+                        copyFile(jsonFile,jsonSS);
 		} else {
 			System.out.println("Failed to create directory!");
 		}
 	}
-        File cssFolder =new File(".\\sites\\"+slides.getTitle()+"\\css");
-                        File imgFolder =new File(".\\sites\\"+slides.getTitle()+"\\img");
-                        File jsFolder =new File(".\\sites\\"+slides.getTitle()+"\\js");
         if(!cssFolder.exists()){
             cssFolder.mkdir();
-            
+            copyFile(cssFile,cssSS);
         }
-        
         if(!imgFolder.exists()){
             imgFolder.mkdir();
         }
         if(!jsFolder.exists()){
              jsFolder.mkdir();
+             copyFile(jsFile,jsSS);
         }
-        
         
         WebView browser = new WebView();
         String path = System.getProperty("user.dir");  
         path.replace("\\\\", "/");  
         path +=  "/html/index.html";  
         browser.getEngine().load("file:///" + path);   
-        //browser.getEngine().load("http://www.popuptest.com/"); 
-        
+               
         Scene scene = new Scene(browser);
 	setScene(scene);
 	this.showAndWait();
