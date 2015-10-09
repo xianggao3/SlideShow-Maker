@@ -1,0 +1,21 @@
+
+{
+    "title":"aa",
+    "slides":[
+        {
+            "image_file_name":"ArchesUtah.jpg",
+            "image_path":"C:\\Users\\xgao3\\Desktop\\SlideshowMaker\\images\\slide_show_images\\",
+            "caption":"arches"
+        },
+        {
+            "image_file_name":"BryceCanyonUtah.jpg",
+            "image_path":"C:\\Users\\xgao3\\Desktop\\SlideshowMaker\\images\\slide_show_images\\",
+            "caption":"ENTER CAPTIO2N"
+        },
+        {
+            "image_file_name":"GreatPlainsNebraska.jpg",
+            "image_path":"C:\\Users\\xgao3\\Desktop\\SlideshowMaker\\images\\slide_show_images\\",
+            "caption":"3"
+        }
+    ]
+}

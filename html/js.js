@@ -1,23 +1,22 @@
 $(document).ready(function(){
-    var myJSON ;
+   
     $.getJSON('js/json.json',function(data){
-        myJSON = data;
         //console.log(data.title);
-        document.getElementById('titleh1').innerHTML=data.title;
         //$('titleh1').innerHTML=data.title;-doesnt work idk why
         //console.log(data);
         
-        document.getElementById('comment').innerHTML=data.slides[0].caption;
-        var relativepath = '../img/';
-        var imgpath = data.slides[0].image_file_name;
-        console.log(relativepath+imgpath);
-        document.getElementById('img').innerHTML=relativepath+imgpath;
         
+        //console.log(myJSON.title);
+    //  console.log(myJSON.slides[0].caption);
+        document.getElementById('titleh1').innerHTML=data.title;//sets title
+        document.getElementById('comments').innerHTML=data.slides[0].caption;
+        document.getElementById('image').src='../img/'+data.slides[0].image_file_name;
+        document.getElementById('next').onclick = nextSlide;
     });
-    document.getElementById('rightbutton').onclick = nextSlide;
-    function nextSlide(){
-        
-    }
    
 })
+function nextSlide(){
+       // document.getElementById('img').innerHTML = i;
+        document.getElementById('comments').innerHTML=data.slides[i+1].caption;
+    }
     
