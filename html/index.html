@@ -6,45 +6,35 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>SlideShow</title>
+        <title>SlideShow</title> 
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" type="text/css" href="ssmCSS.css">
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-            <script src="js.js"></script>
+            <link rel="stylesheet" type="text/css" href="./css/ssmCSS.css">
+            <script src="./js/js.js"></script>
         </head>
     <body>
 
         <div id="header">
-        <h1>Title</h1>
+        <h1 id ="titleh1"></h1>
         </div>
 
-
-        <div id="middle">
-            <div id="leftbutton">
-                <img id = "prev" src="../images/icons/Previous.png"/>
-            </div>
-
-            <h2>
-                IMAGE
-            </h2>
-
-            <div id="rightbutton">
-                <img id = "next" src="../images/icons/Next.png"/>
-            </div>
-        </div>
-
-        <div id="playpause">
-        <span class="glyphicons glyphicons-play"></span>
-        <img id = "play" src="../images/icons/Play.png"/>
-        <img id = "pause" src="../images/icons/Pause.png"/>
-        </div>
+        <div id="leftbutton">
+        <img id = "prev" src="../../images/icons/Previous.png"/>
         
+        </div>
+
+        <div id="image">
+        <h2>IMAGE</h2>
+        </div>
+
+        <div id="rightbutton">
+        <img id = "next" src="../../images/icons/Next.png"/>
+        </div>
+
         <div id="footer">
         Comments
         </div>
-        
-        
-            
     </body>
 </html>
+

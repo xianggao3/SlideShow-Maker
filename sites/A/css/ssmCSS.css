@@ -11,36 +11,80 @@ and open the template in the editor.
             background-color:#3B5998;
             color:white;
             text-align:center;
-            padding:0.5px;
+            padding:5px;
             box-shadow: 0px 0px 3px 3px #000;
             border-radius: 5px;
         }
         #leftbutton {
             line-height:30px;
-            height:450px;
-            width:50px;
             float:left;
-            padding:5px;
-        }
-        #prev{
-            vertical-align: middle;
-        }
-        #next{
-            vertical-align: middle;
-        }
-        #image {
-          
-            float:left;
-            padding:10px;
-            text-align:center;	 	 
+            margin-right: 10%;
+            margin-left: 0%;
+            border: 3px solid #8AC007;
+            top:50%;
+            
+
         }
         #rightbutton {
             line-height:30px;
-            height:450px;
-            width:50px;
-            float:right;
-            padding:5px;
+            margin-right: 0%;
+            margin-left: 90%;
+            border: 3px solid #8AC007;
+            top: 50%;
+
         }
+        #prev{
+                        min-height: 1em;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            display: table-cell;
+            
+            
+        }
+        #next{
+                        min-height: 1em;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            display: table-cell;
+            
+        }
+        #middle {
+          
+            padding:10px;
+            text-align:center;
+            
+            border: 3px solid #8AC007;
+
+        }
+       
+        h2 {
+            font-size: 100px;
+        }
+        
+        #playpause{
+            position: relative;
+            float:bottom;
+            border: 3px solid #8AC007;
+            margin-bottom:30px;
+            
+        }
+        #play{
+            min-height: 1em;
+            display: table-cell;
+            vertical-align: middle;
+            margin-left: auto;
+          margin-right: auto
+        }
+        #pause{
+            min-height: 1em;
+            display: table-cell;
+            vertical-align: middle;
+            margin-left: auto;
+            margin-right: auto
+        }
+        
         #footer {
             background-color:#3B5998;
             color:white;

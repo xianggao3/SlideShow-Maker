@@ -118,7 +118,8 @@ public class SlideShowViewer extends Stage {
         WebView browser = new WebView();
         String path = System.getProperty("user.dir");  
         path.replace("\\\\", "/");  
-        path +=  "/html/index.html";  
+        path +=  "/sites/"+slides.getTitle()+"/index.html";  
+        //System.out.println(path);
         browser.getEngine().load("file:///" + path);   
                
         

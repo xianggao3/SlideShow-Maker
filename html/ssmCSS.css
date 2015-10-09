@@ -18,41 +18,71 @@ and open the template in the editor.
         #leftbutton {
             line-height:30px;
             float:left;
-            margin-top:0%;
             margin-right: 10%;
             margin-left: 0%;
             border: 3px solid #8AC007;
+            top:50%;
+            
 
         }
         #rightbutton {
             line-height:30px;
-            margin-top:0%;
             margin-right: 0%;
             margin-left: 90%;
             border: 3px solid #8AC007;
+            top: 50%;
 
         }
         #prev{
+                        min-height: 1em;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            display: table-cell;
+            
+            
         }
         #next{
+                        min-height: 1em;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            display: table-cell;
+            
         }
         #middle {
           
             padding:10px;
             text-align:center;
+            
             border: 3px solid #8AC007;
 
         }
        
+        h2 {
+            font-size: 100px;
+        }
         
         #playpause{
             position: relative;
             float:bottom;
             border: 3px solid #8AC007;
-            margin-left:10%;
-            margin-right:10%;
             margin-bottom:30px;
-
+            
+        }
+        #play{
+            min-height: 1em;
+            display: table-cell;
+            vertical-align: middle;
+            margin-left: auto;
+          margin-right: auto
+        }
+        #pause{
+            min-height: 1em;
+            display: table-cell;
+            vertical-align: middle;
+            margin-left: auto;
+            margin-right: auto
         }
         
         #footer {
