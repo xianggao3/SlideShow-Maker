@@ -82,6 +82,7 @@ public class SlideShowViewer extends Stage {
         File cssFile = new File("./html/ssmCSS.css");
         File jsFile = new File("./html/js.js");
         File jsonFile = new File("./data/slide_shows/"+slides.getTitle()+".json");
+       // File imgFiles;
         //new folders for css,imgs,and js
         File cssFolder =new File("./sites/"+slides.getTitle()+"/css");
         File imgFolder =new File("./sites/"+slides.getTitle()+"/img");
@@ -92,7 +93,7 @@ public class SlideShowViewer extends Stage {
         File cssSS = new File("./sites/"+slides.getTitle()+"/css/ssmCSS.css");
         File jsSS = new File("./sites/"+slides.getTitle()+"/js/js.js");
         File jsonSS = new File("./sites/"+slides.getTitle()+"/js/json.json");
-        
+       // File imgSS;
         if (!thisSS.exists()) {//makes the slide directory and adds html and json all into sites directory
 		if (thisSS.mkdir()) {
 			System.out.println("Directory is created!");
@@ -109,12 +110,18 @@ public class SlideShowViewer extends Stage {
         }
         if(!imgFolder.exists()){
             imgFolder.mkdir();
+            for(Slide n : slides.getSlides()){
+                File imgFiles= new File("./images/slide_show_images/"+n.getImageFileName());
+                File imgSS = new File("./sites/"+slides.getTitle()+"/img/"+n.getImageFileName());
+                copyFile(imgFiles,imgSS);
+            }   
         }
         if(!jsFolder.exists()){
              jsFolder.mkdir();
              copyFile(jsFile,jsSS);
              copyFile(jsonFile,jsonSS);
         }
+            
         
         
         WebView browser = new WebView();
@@ -184,7 +191,7 @@ public class SlideShowViewer extends Stage {
 	this.showAndWait();
                 
         */
-    }
+            }
 
     // HELPER METHOD
     private void reloadSlideShowImageView() {
