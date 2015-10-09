@@ -91,14 +91,14 @@ public class SlideShowViewer extends Stage {
         File htmlSS = new File("./sites/"+slides.getTitle()+"/index.html");
         File cssSS = new File("./sites/"+slides.getTitle()+"/css/ssmCSS.css");
         File jsSS = new File("./sites/"+slides.getTitle()+"/js/js.js");
-        File jsonSS = new File("./sites/"+slides.getTitle()+"/json.json");
+        File jsonSS = new File("./sites/"+slides.getTitle()+"/js/json.json");
         
         if (!thisSS.exists()) {//makes the slide directory and adds html and json all into sites directory
 		if (thisSS.mkdir()) {
 			System.out.println("Directory is created!");
                         
                         copyFile(htmlFile,htmlSS);
-                        copyFile(jsonFile,jsonSS);
+                        
 		} else {
 			System.out.println("Failed to create directory!");
 		}
@@ -113,7 +113,9 @@ public class SlideShowViewer extends Stage {
         if(!jsFolder.exists()){
              jsFolder.mkdir();
              copyFile(jsFile,jsSS);
+             copyFile(jsonFile,jsonSS);
         }
+        
         
         WebView browser = new WebView();
         String path = System.getProperty("user.dir");  

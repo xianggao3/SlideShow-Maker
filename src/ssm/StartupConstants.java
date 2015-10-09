@@ -50,6 +50,9 @@ public class StartupConstants {
     public static String    CSS_CLASS_SLIDE_SHOW_EDIT_VBOX = "slide_show_edit_vbox";
     public static String    CSS_CLASS_SLIDE_EDIT_VIEW = "slide_edit_view";
     public static String    CSS_CLASS_SELECTED_SLIDE_EDIT_VIEW = "selected_slide_edit_view";
+    public static String    CSS_CLASS_SLIDE_SHOW_TOOLBAR="slide_show_toolbar";
+    public static String    CSS_CLASS_SLIDE_SHOW_WORKSPACE="slide_show_workspace";
+    
     
     // UI LABELS
     public static String    LABEL_SLIDE_SHOW_TITLE = "slide_show_title";

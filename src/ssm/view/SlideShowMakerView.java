@@ -39,6 +39,8 @@ import static ssm.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
 import static ssm.StartupConstants.CSS_CLASS_SELECTED_SLIDE_EDIT_VIEW;
 import static ssm.StartupConstants.CSS_CLASS_SLIDE_EDIT_VIEW;
 import static ssm.StartupConstants.CSS_CLASS_SLIDE_SHOW_EDIT_VBOX;
+import static ssm.StartupConstants.CSS_CLASS_SLIDE_SHOW_TOOLBAR;
+import static ssm.StartupConstants.CSS_CLASS_SLIDE_SHOW_WORKSPACE;
 import static ssm.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static ssm.StartupConstants.ICON_ADD_SLIDE;
 import static ssm.StartupConstants.ICON_EXIT;
@@ -175,7 +177,7 @@ public class SlideShowMakerView {
     private void initWorkspace() {
 	// FIRST THE WORKSPACE ITSELF, WHICH WILL CONTAIN TWO REGIONS
 	workspace = new HBox();
-	
+	workspace.getStyleClass().add(CSS_CLASS_SLIDE_SHOW_WORKSPACE);
 	// THIS WILL GO IN THE LEFT SIDE OF THE SCREEN
 	slideEditToolbar = new VBox();
 	slideEditToolbar.getStyleClass().add(CSS_CLASS_SLIDE_SHOW_EDIT_VBOX);
@@ -239,6 +241,7 @@ public class SlideShowMakerView {
      */
     private void initFileToolbar() {
 	fileToolbarPane = new FlowPane();
+        fileToolbarPane.getStyleClass().add(CSS_CLASS_SLIDE_SHOW_TOOLBAR);
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
 	// START AS ENABLED (false), WHILE OTHERS DISABLED (true)
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
