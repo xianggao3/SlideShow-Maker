@@ -13,7 +13,10 @@ and open the template in the editor.
             text-align: left;
             padding:5px;
             box-shadow: 0px 0px 3px 3px #000;
-            border-radius: 5px;
+            border-radius: 15px;
+            font-family: 'Arvo', serif;
+            font-size: 42px;
+
         }
         
         #prev{
@@ -49,4 +52,7 @@ and open the template in the editor.
             padding:5px;	 
             box-shadow: 0px 0px 3px 3px #000;
             border-radius: 5px;
+            font-family: 'Arvo', serif;
+          font-size: 20px;
+
         }

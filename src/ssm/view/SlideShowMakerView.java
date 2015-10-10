@@ -185,7 +185,13 @@ public class SlideShowMakerView {
 	removeSlideButton = this.initChildButton(slideEditToolbar,	ICON_REMOVE_SLIDE,  TOOLTIP_REMOVE_SLIDE,   CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
 	moveSlideUpButton = this.initChildButton(slideEditToolbar,	ICON_MOVE_UP,	    TOOLTIP_MOVE_UP,	    CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
 	moveSlideDownButton = this.initChildButton(slideEditToolbar,	ICON_MOVE_DOWN,	    TOOLTIP_MOVE_DOWN,	    CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
-	
+	slideEditToolbar.setSpacing(10);
+        
+        addSlideButton.setAlignment(Pos.CENTER);
+        removeSlideButton.setAlignment(Pos.CENTER);
+        moveSlideUpButton.setAlignment(Pos.CENTER);
+        moveSlideDownButton.setAlignment(Pos.CENTER);
+        
 	// AND THIS WILL GO IN THE CENTER
 	slidesEditorPane = new VBox();
 	slidesEditorScrollPane = new ScrollPane(slidesEditorPane);
@@ -242,6 +248,7 @@ public class SlideShowMakerView {
     private void initFileToolbar() {
 	fileToolbarPane = new FlowPane();
         fileToolbarPane.getStyleClass().add(CSS_CLASS_SLIDE_SHOW_TOOLBAR);
+        fileToolbarPane.setHgap(75);
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
 	// START AS ENABLED (false), WHILE OTHERS DISABLED (true)
 	PropertiesManager props = PropertiesManager.getPropertiesManager();

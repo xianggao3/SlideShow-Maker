@@ -1,6 +1,9 @@
 $(document).ready(function(){
    var n=0;
    var playing = 0;
+   
+  var timerId = 0;
+
     $.getJSON('js/json.json',function(data){
         //console.log(data.title);
         //$('titleh1').innerHTML=data.title;-doesnt work idk why
@@ -36,17 +39,17 @@ $(document).ready(function(){
         if(playing%2===0){
             $('#pause').hide();
             $('#play').show();
+            
+            clearInterval(timerId);
         }
         else if(playing%2===1){
            $('#play').hide();
           $('#pause').show();
-          setInterval(function() {
+          timerId=setInterval(function() {
               nextSlide();
-            }, 300);
+            }, 3000);
         }
     }
-        
-        
     });
    
 })
