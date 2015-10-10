@@ -64,7 +64,7 @@ public class SlideEditView extends HBox {
 	captionTextField.setText(slide.getCaption());
 	captionVBox.getChildren().add(captionLabel);
 	captionVBox.getChildren().add(captionTextField);
-
+        
 	// LAY EVERYTHING OUT INSIDE THIS COMPONENT
 	getChildren().add(imageSelectionView);
 	getChildren().add(captionVBox);

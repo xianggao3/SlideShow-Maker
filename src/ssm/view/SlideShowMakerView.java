@@ -196,6 +196,8 @@ public class SlideShowMakerView {
 	// NOW PUT THESE TWO IN THE WORKSPACE
 	workspace.getChildren().add(slideEditToolbar);
 	workspace.getChildren().add(slidesEditorScrollPane);
+        slidesEditorScrollPane.getStyleClass().add(CSS_CLASS_SELECTED_SLIDE_EDIT_VIEW);
+        slidesEditorPane.getStyleClass().add(CSS_CLASS_SLIDE_SHOW_WORKSPACE);
     }
 
     private void initEventHandlers() {
