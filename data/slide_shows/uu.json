@@ -1,0 +1,21 @@
+
+{
+    "title":"uu",
+    "slides":[
+        {
+            "image_file_name":"CapeSpearNewfoundland.jpg",
+            "image_path":"C:\\Users\\xgao3\\Desktop\\SlideshowMaker\\images\\slide_show_images\\",
+            "caption":"s"
+        },
+        {
+            "image_file_name":"DefaultStartSlide.png",
+            "image_path":"./images/slide_show_images/",
+            "caption":"ENTER CAPTION"
+        },
+        {
+            "image_file_name":"DefaultStartSlide.png",
+            "image_path":"./images/slide_show_images/",
+            "caption":"ENTER CAPTION"
+        }
+    ]
+}

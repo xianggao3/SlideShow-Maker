@@ -6,24 +6,24 @@
  */
 
 .slide_show_edit_vbox {
-    -fx-background-color: #FFFF33;
-    background-image: linear-gradient(90deg, rgba(255,255,51,.07) 50%, transparent 50%),
-    linear-gradient(90deg, rgba(255,255,51,.13) 50%, transparent 50%),
-    linear-gradient(90deg, transparent 50%, rgba(255,255,51,.17) 50%),
-    linear-gradient(90deg, transparent 50%, rgba(255,255,51,.19) 50%);
-    -fx-background-size: 13px, 29px, 37px, 53px;
-    -fx-border-color: rgb(200, 200, 200);
+    -fx-background-image: url("http://7-themes.com/data_images/out/36/6893569-yellow-bokeh.jpg");
+}
+.root{
+    -fx-background-image:url('http://www.macenvelopes.com/Portals/_default/Skins/Minimalist-Earth-Glass/backgrounds/orange/09_image.jpg');
 }
 .slide_show_toolbar{
     -fx-background-color: rgb(255, 255, 128);
+    -fx-background-image: url("http://7-themes.com/data_images/out/36/6893569-yellow-bokeh.jpg");
+
 }
 .slide_show_workspace{
     -fx-background-color: rgb(255, 255, 99);
+    -fx-background-image: url("http://www.macenvelopes.com/Portals/_default/Skins/Minimalist-Earth-Glass/backgrounds/orange/09_image.jpg");
 }
 
-.slide_edit_view {
+.slide_edit_view {//SELECTED SLIDE
     -fx-background-radius: 10.0;
-    -fx-background-color: rgb(241, 221, 56);
+    -fx-background-color: rgb(241, 221, 150);
     -fx-border-color: rgb(70, 5, 5);
     -fx-border-thickness: 10px;
     -fx-spacing: 60px;
@@ -31,16 +31,15 @@
 
 .selected_slide_edit_view {
     -fx-background-radius: 10.0;
-    -fx-background-color: rgb(242, 240, 161);
+    -fx-background-color: rgb(241, 221, 56);
     -fx-border-color: rgb(200, 200, 200);
     -fx-border-thickness: 10px;
     -fx-spacing: 60px;
 }
 .vertical_toolbar_button {
-    -fx-background-color: rgb(124, 136, 151);
-    -fx-padding: 10px 10px 10px 10px;
+    -fx-background-color: rgb(230, 184, 0);
+    -fx-padding: 13px 13px 13px 13px;
     -fx-spacing: 50px;
-    
 }
 
 .horizontal_toolbar_button {

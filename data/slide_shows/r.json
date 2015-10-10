@@ -1,0 +1,21 @@
+
+{
+    "title":"r",
+    "slides":[
+        {
+            "image_file_name":"ArchesUtah.jpg",
+            "image_path":"C:\\Users\\xgao3\\Desktop\\SlideshowMaker\\images\\slide_show_images\\",
+            "caption":"ENTER CAPTION1"
+        },
+        {
+            "image_file_name":"GrosMorneNewfoundland.jpg",
+            "image_path":"C:\\Users\\xgao3\\Desktop\\SlideshowMaker\\images\\slide_show_images\\",
+            "caption":"ENTER CAPTION2"
+        },
+        {
+            "image_file_name":"SignalHillNewfoundland.jpg",
+            "image_path":"C:\\Users\\xgao3\\Desktop\\SlideshowMaker\\images\\slide_show_images\\",
+            "caption":"ENTER CAPTION5"
+        }
+    ]
+}
