@@ -1,0 +1,21 @@
+
+{
+    "title":"z",
+    "slides":[
+        {
+            "image_file_name":"BryceCanyonUtah.jpg",
+            "image_path":"C:\\Users\\xgao3\\Desktop\\SlideshowMaker\\images\\slide_show_images\\",
+            "caption":"ENTER CAPTION1"
+        },
+        {
+            "image_file_name":"BadlandsSouthDakota.jpg",
+            "image_path":"C:\\Users\\xgao3\\Desktop\\SlideshowMaker\\images\\slide_show_images\\",
+            "caption":"ENTER CAPTION2"
+        },
+        {
+            "image_file_name":"DefaultStartSlide.png",
+            "image_path":"./images/slide_show_images/",
+            "caption":"ENTER CAPTION3"
+        }
+    ]
+}

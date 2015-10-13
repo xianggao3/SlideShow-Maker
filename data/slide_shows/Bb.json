@@ -1,0 +1,21 @@
+
+{
+    "title":"Bb",
+    "slides":[
+        {
+            "image_file_name":"CapeSpearNewfoundland.jpg",
+            "image_path":"C:\\Users\\xgao3\\Desktop\\SlideshowMaker\\images\\slide_show_images\\",
+            "caption":"Cape"
+        },
+        {
+            "image_file_name":"GreatPlainsNebraska.jpg",
+            "image_path":"C:\\Users\\xgao3\\Desktop\\SlideshowMaker\\images\\slide_show_images\\",
+            "caption":"Great Plains"
+        },
+        {
+            "image_file_name":"GrosMorneNewfoundland.jpg",
+            "image_path":"C:\\Users\\xgao3\\Desktop\\SlideshowMaker\\images\\slide_show_images\\",
+            "caption":"Gros"
+        }
+    ]
+}

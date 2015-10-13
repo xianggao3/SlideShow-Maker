@@ -7,6 +7,8 @@
 
 .slide_show_edit_vbox {
     -fx-background-image: url("http://7-themes.com/data_images/out/36/6893569-yellow-bokeh.jpg");
+    font-family: 'Arvo', serif;
+            font-size: 42px;
 }
 .root{
     -fx-background-image:url('http://www.macenvelopes.com/Portals/_default/Skins/Minimalist-Earth-Glass/backgrounds/orange/09_image.jpg');
@@ -14,11 +16,15 @@
 .slide_show_toolbar{
     -fx-background-color: rgb(255, 255, 128);
     -fx-background-image: url("http://7-themes.com/data_images/out/36/6893569-yellow-bokeh.jpg");
+    font-family: 'Arvo', serif;
+            font-size: 42px;
 
 }
 .slide_show_workspace{
     -fx-background-color: rgb(255, 255, 99);
     -fx-background-image: url("http://www.macenvelopes.com/Portals/_default/Skins/Minimalist-Earth-Glass/backgrounds/orange/09_image.jpg");
+    font-family: 'Arvo', serif;
+            font-size: 42px;
 }
 
 .slide_edit_view {//SELECTED SLIDE
@@ -27,6 +33,8 @@
     -fx-border-color: rgb(70, 5, 5);
     -fx-border-thickness: 10px;
     -fx-spacing: 60px;
+    font-family: 'Arvo', serif;
+            font-size: 42px;
 }
 
 .selected_slide_edit_view {
@@ -35,14 +43,20 @@
     -fx-border-color: rgb(200, 200, 200);
     -fx-border-thickness: 10px;
     -fx-spacing: 60px;
+    font-family: 'Arvo', serif;
+            font-size: 42px;
 }
 .vertical_toolbar_button {
     -fx-background-color: rgb(230, 184, 0);
     -fx-padding: 13px 13px 13px 13px;
     -fx-spacing: 50px;
+    font-family: 'Arvo', serif;
+            font-size: 42px;
 }
 
 .horizontal_toolbar_button {
     -fx-padding-left: 10px;
     -fx-padding-right: 20px;
+    font-family: 'Arvo', serif;
+            font-size: 42px;
 }
